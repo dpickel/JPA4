@@ -7,11 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 @Entity
-public class Maire {
+public class Elu {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.AUTO )
@@ -20,24 +19,21 @@ public class Maire {
 	@Column(length = 40)
 	private String nom;
 	
-	@OneToOne( mappedBy = "maire" )
-	private Commune commune;
-	
-	@OneToMany
-	private Set<Elu> elu ;
+	@ManyToMany
+	private Set<Projet> projets ;
 
 	/**
-	 * @return the commune
+	 * @return the projets
 	 */
-	public Commune getCommune() {
-		return commune;
+	public Set<Projet> getProjets() {
+		return projets;
 	}
 
 	/**
-	 * @param commune the commune to set
+	 * @param projets the projets to set
 	 */
-	public void setCommune(Commune commune) {
-		this.commune = commune;
+	public void setProjets(Set<Projet> projets) {
+		this.projets = projets;
 	}
 
 	/**
@@ -67,6 +63,5 @@ public class Maire {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	
 	
 }

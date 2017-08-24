@@ -12,7 +12,9 @@ import javax.persistence.TypedQuery;
 
 import fr.codevallee.formation.tp.modele.Crud;
 import fr.codevallee.formation.tp.modele.Demo;
+import fr.codevallee.formation.tp.modele.Maire;
 import fr.codevallee.formation.tp.modele.Personne;
+import fr.codevallee.formation.tp.modele.Projet;
 import freemarker.template.Configuration;
 import freemarker.template.Version;
 import spark.ModelAndView;
@@ -38,7 +40,11 @@ final Logger logger = LoggerFactory.getLogger(Router.class);
 			// Exemple 1 (à déplacer dans une classe statique !):
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
-
+			
+			TypedQuery<Maire> query = entityManager.createQuery("from Maire", Maire.class);
+			query.getResultList();
+			//attributes.put("objet", query.getResultList());
+			
 			entityManager.close();
 
 			return new ModelAndView(attributes, "home.ftl");
