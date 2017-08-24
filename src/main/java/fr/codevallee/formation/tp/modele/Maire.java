@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Maire {
@@ -15,6 +16,9 @@ public class Maire {
 	
 	@Column(length = 40)
 	private String nom;
+	
+	@OneToOne( mappedBy = "maire" )
+	private Commune commune;
 
 	/**
 	 * @return the id

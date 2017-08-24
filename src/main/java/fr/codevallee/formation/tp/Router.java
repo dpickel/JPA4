@@ -26,51 +26,22 @@ public class Router implements SparkApplication {
 
 	public void init() {
 	
-			get("/modifier.modis", (request, response) -> {
-			Map<String, Object> attributes = new HashMap<>();
-			return new ModelAndView(attributes, "modifier.ftl");
-			}, getFreeMarkerEngine());
+final Logger logger = LoggerFactory.getLogger(Router.class);
 
-			get("/resultat", (request, response) -> {
-				String nom = request.queryParams("nom");
-				String prenom = request.queryParams("prenom");
-				String civilite = request.queryParams("civilite");
-			
+		
+		get("/exemple1", (request, response) -> {
+
+			logger.debug("start");
+
 			Map<String, Object> attributes = new HashMap<>();
 
 			// Exemple 1 (à déplacer dans une classe statique !):
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-			// J'ajoute un métier :
-			//Demo metier = new Demo();
-			//metier.setNom("exemple1");
-
-			// J'ajoute une nouvelle personne
-			
-			Personne personne = new Personne();
-			personne.setCivilite(civilite);
-			personne.setNom(nom);
-			personne.setPrenom(prenom);;
-
-			Crud crud = new Crud();
-			crud.Create(entityManager, personne);
-			
-//			entityManager.getTransaction().begin();
-//			entityManager.persist(personne);
-//			entityManager.getTransaction().commit();
-			//entityManager.close();
-			
-			// Ajout pour TP3
-			
-			//TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-//			TypedQuery<Personne> query = entityManager.createQuery("from Personne", Personne.class);
-//			
-//			attributes.put("objets", query.getResultList());
-			crud.Read(attributes, entityManager);
 			entityManager.close();
 
-			return new ModelAndView(attributes, "resultat.ftl");
+			return new ModelAndView(attributes, "home.ftl");
 		}, getFreeMarkerEngine());
 
 	}
