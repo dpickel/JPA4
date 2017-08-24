@@ -3,10 +3,12 @@
 <ul>
 	<#list objets as obj>
 
-		<li>
+			${obj.civilite}
+<nbsp> <nbsp> <nbsp>
 			${obj.nom}
-		</li>
-
+<nbsp> <nbsp> <nbsp>
+			${obj.prenom}
+<br></br<
 	</#list>
 </ul>
 

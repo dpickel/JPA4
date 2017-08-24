@@ -10,7 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import fr.codevallee.formation.tp.modele.Crud;
 import fr.codevallee.formation.tp.modele.Demo;
+import fr.codevallee.formation.tp.modele.Personne;
 import freemarker.template.Configuration;
 import freemarker.template.Version;
 import spark.ModelAndView;
@@ -23,14 +25,17 @@ import org.slf4j.LoggerFactory;
 public class Router implements SparkApplication {
 
 	public void init() {
+	
+			get("/modifier.modis", (request, response) -> {
+			Map<String, Object> attributes = new HashMap<>();
+			return new ModelAndView(attributes, "modifier.ftl");
+			}, getFreeMarkerEngine());
 
-		final Logger logger = LoggerFactory.getLogger(Router.class);
-
-		
-		get("/exemple1", (request, response) -> {
-
-			logger.debug("start");
-
+			get("/resultat", (request, response) -> {
+				String nom = request.queryParams("nom");
+				String prenom = request.queryParams("prenom");
+				String civilite = request.queryParams("civilite");
+			
 			Map<String, Object> attributes = new HashMap<>();
 
 			// Exemple 1 (à déplacer dans une classe statique !):
@@ -38,21 +43,34 @@ public class Router implements SparkApplication {
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 			// J'ajoute un métier :
-			Demo metier = new Demo();
-			metier.setNom("exemple1");
+			//Demo metier = new Demo();
+			//metier.setNom("exemple1");
 
-			entityManager.getTransaction().begin();
-			entityManager.persist(metier);
-			entityManager.getTransaction().commit();
+			// J'ajoute une nouvelle personne
+			
+			Personne personne = new Personne();
+			personne.setCivilite(civilite);
+			personne.setNom(nom);
+			personne.setPrenom(prenom);;
+
+			Crud crud = new Crud();
+			crud.Create(entityManager, personne);
+			
+//			entityManager.getTransaction().begin();
+//			entityManager.persist(personne);
+//			entityManager.getTransaction().commit();
 			//entityManager.close();
 			
 			// Ajout pour TP3
 			
-			TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-			attributes.put("objets", query.getResultList());
+			//TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
+//			TypedQuery<Personne> query = entityManager.createQuery("from Personne", Personne.class);
+//			
+//			attributes.put("objets", query.getResultList());
+			crud.Read(attributes, entityManager);
 			entityManager.close();
 
-			return new ModelAndView(attributes, "home.ftl");
+			return new ModelAndView(attributes, "resultat.ftl");
 		}, getFreeMarkerEngine());
 
 	}
