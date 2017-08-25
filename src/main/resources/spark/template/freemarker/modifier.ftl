@@ -24,6 +24,9 @@
 		Prenom : <input type="text" name="prenom">	
 		<br></br>
 		
+		Identifiant : <input type="text" name="Id">	
+		<br></br>
+		
 		<button type="submit">Valider !</button>
 	
 	</form>

@@ -6,21 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
 @Table(name = "personne")
 
 public class Personne {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
+
 	private String civilite;
 	private String nom;
 	private String prenom;
-	//private int age;
-	
+	// private int age;
 
 	/**
 	 * @return the nom
@@ -37,14 +35,16 @@ public class Personne {
 	}
 
 	/**
-	 * @param civilite the civilite to set
+	 * @param civilite
+	 *            the civilite to set
 	 */
 	public void setCivilite(String civilite) {
 		this.civilite = civilite;
 	}
 
 	/**
-	 * @param nom the nom to set
+	 * @param nom
+	 *            the nom to set
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
@@ -58,24 +58,26 @@ public class Personne {
 	}
 
 	/**
-	 * @param prenom the prenom to set
+	 * @param prenom
+	 *            the prenom to set
 	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 
-//	/**
-//	 * @return the age
-//	 */
-//	public int getAge() {
-//		return age;
-//	}
+	/**
+	 * @return the id
+	 */
+	public Integer getId() {
+		return id;
+	}
 
-//	/**
-//	 * @param age the age to set
-//	 */
-//	public void setAge(int age) {
-//		this.age = age;
-//	}
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 }

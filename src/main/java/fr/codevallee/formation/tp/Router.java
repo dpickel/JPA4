@@ -37,6 +37,7 @@ public class Router implements SparkApplication {
 			String prenom = request.queryParams("prenom");
 			String civilite = request.queryParams("civilite");
 
+
 			Map<String, Object> attributes = new HashMap<>();
 
 			// Exemple 1 (à déplacer dans une classe statique !):
@@ -47,7 +48,6 @@ public class Router implements SparkApplication {
 
 			if (action.equals("Ajouter") == true) {
 
-				System.out.println("toto ajoter");
 				crud.Create(entityManager, civilite, nom, prenom);
 				nom_de_fichier = "modifier.ftl";
 
@@ -55,37 +55,29 @@ public class Router implements SparkApplication {
 
 			if (action.equals("Lire") == true) {
 
-				System.out.println("toto lire");
 				attributes = crud.Read(attributes, entityManager);
-				
 				nom_de_fichier = "resultat.ftl";
 
 			}
 			
 			if (action.equals("Supprimer") == true) {
 
-				System.out.println("toto supprimer");
-				crud.Delete(entityManager, civilite, nom, prenom);
+				int id = Integer.parseInt( request.queryParams("Id") );
+				crud.Delete(entityManager, id);
+				nom_de_fichier = "modifier.ftl";
+
+			}
+			
+			if (action.equals("Mettre_a_jour") == true) {
+
+				int id = Integer.parseInt( request.queryParams("Id") );
+				System.out.println("toto maj");
+				crud.MettreAJour( entityManager, civilite, nom, prenom, id );
 				nom_de_fichier = "modifier.ftl";
 
 			}
 
-			
-			// entityManager.getTransaction().begin();
-			// entityManager.persist(personne);
-			// entityManager.getTransaction().commit();
-			// entityManager.close();
 
-			// Ajout pour TP3
-
-			// TypedQuery<Demo> query = entityManager.createQuery("from Demo",
-			// Demo.class);
-			// TypedQuery<Personne> query = entityManager.createQuery("from
-			// Personne", Personne.class);
-			//
-			// attributes.put("objets", query.getResultList());
-			// crud.Read(attributes, entityManager);
-			//nom_de_fichier = "resultat.ftl";
 			entityManager.close();
 
 			return new ModelAndView(attributes, nom_de_fichier);
