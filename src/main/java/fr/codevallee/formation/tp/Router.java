@@ -47,11 +47,11 @@ final Logger logger = LoggerFactory.getLogger(Router.class);
 			Maire maire = new Maire();
 			maire.setNom("Anne");
 			commune.setMaire(maire);
-			commune = entityManager.find(Commune.class, 63L);
+			commune = entityManager.find(Commune.class, 59L);
 			
-//			entityManager.getTransaction().begin();
-//			entityManager.remove( commune );
-//			entityManager.getTransaction().commit();
+			entityManager.getTransaction().begin();
+			commune.setNom("Troyes");
+			entityManager.getTransaction().commit();
 
 			TypedQuery<Maire> query = entityManager.createQuery("from Maire", Maire.class);
 			
