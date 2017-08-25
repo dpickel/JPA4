@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import fr.codevallee.formation.tp.modele.Commune;
 import fr.codevallee.formation.tp.modele.Crud;
 import fr.codevallee.formation.tp.modele.Demo;
 import fr.codevallee.formation.tp.modele.Maire;
@@ -41,9 +42,26 @@ final Logger logger = LoggerFactory.getLogger(Router.class);
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 			
+			Commune commune = new Commune();
+			commune.setNom("Paris");
+			Maire maire = new Maire();
+			maire.setNom("Anne");
+			commune.setMaire(maire);
+			commune = entityManager.find(Commune.class, 63L);
+			
+//			entityManager.getTransaction().begin();
+//			entityManager.remove( commune );
+//			entityManager.getTransaction().commit();
+
 			TypedQuery<Maire> query = entityManager.createQuery("from Maire", Maire.class);
+			
 			query.getResultList();
-			//attributes.put("objet", query.getResultList());
+			attributes.put("objet", query.getResultList());
+			for ( Maire m : query.getResultList() ){
+				
+				System.out.println(m.getNom() + ";" + m.getCommune().getNom());
+				
+			}
 			
 			entityManager.close();
 

@@ -2,6 +2,14 @@
 
 	<form action="/resultat" method="get">
 	
+		<select name="Action">
+		<option value = "Ajouter"> Ajouter </option> 
+		<option value = "Lire"> Lire </option>
+		<option value = "Mettre_a_jour"> Mettre ajour </option>
+		<option value = "Supprimer"> Supprimer </option>
+		</select>
+		<br></br>
+	
 		<select name="civilite">
 		<option value = "Mr"> Mr </option> 
 		<option value = "Mme"> Mme </option>

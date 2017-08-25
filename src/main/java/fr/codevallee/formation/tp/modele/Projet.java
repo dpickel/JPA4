@@ -2,6 +2,7 @@ package fr.codevallee.formation.tp.modele;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Projet {
 	@Column(length = 40)
 	private String nom;
 	
-	@ManyToMany(mappedBy = "projets")
+	@ManyToMany(mappedBy = "projets", cascade={CascadeType.PERSIST,CascadeType.REMOVE})
 	private Set<Elu> elus;
 
 	/**

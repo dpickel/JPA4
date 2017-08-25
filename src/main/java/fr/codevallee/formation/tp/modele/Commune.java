@@ -1,5 +1,6 @@
 package fr.codevallee.formation.tp.modele;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Commune {
 	@Column(length = 40)
 	private String nom;
 	
-	@OneToOne
+	@OneToOne(cascade={CascadeType.PERSIST,CascadeType.REMOVE}, orphanRemoval=true)
 	private Maire maire;
 
 	/**
