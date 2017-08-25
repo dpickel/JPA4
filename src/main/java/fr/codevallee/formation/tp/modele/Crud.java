@@ -7,19 +7,24 @@ import javax.persistence.TypedQuery;
 
 public class Crud {
 
-	public void Create( EntityManager entityManager, Personne personne ){
+	public void Create( EntityManager entityManager, String civilite, String nom, String prenom ){
 
+		Personne personne = new Personne();
+		personne.setCivilite(civilite);
+		personne.setNom(nom);
+		personne.setPrenom(prenom);
+		
 		entityManager.getTransaction().begin();
 		entityManager.persist(personne);
 		entityManager.getTransaction().commit();
 		
 	}
 	
-	public void Read( Map<String, Object> attributes, EntityManager entityManager ){
+	public Map<String, Object>  Read( Map<String, Object> attributes, EntityManager entityManager ){
 		
 		TypedQuery<Personne> query = entityManager.createQuery("from Personne", Personne.class);
-		
 		attributes.put("objets", query.getResultList());
+		return attributes;
 		
 	}
 	

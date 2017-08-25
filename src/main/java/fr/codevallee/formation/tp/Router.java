@@ -25,52 +25,67 @@ import org.slf4j.LoggerFactory;
 public class Router implements SparkApplication {
 
 	public void init() {
-	
-			get("/modifier.modis", (request, response) -> {
+
+		get("/modifier.modis", (request, response) -> {
 			Map<String, Object> attributes = new HashMap<>();
 			return new ModelAndView(attributes, "modifier.ftl");
-			}, getFreeMarkerEngine());
+		}, getFreeMarkerEngine());
 
-			get("/resultat", (request, response) -> {
-				String nom = request.queryParams("nom");
-				String prenom = request.queryParams("prenom");
-				String civilite = request.queryParams("civilite");
-			
+		get("/resultat", (request, response) -> {
+			String action = request.queryParams("Action");
+			String nom = request.queryParams("nom");
+			String prenom = request.queryParams("prenom");
+			String civilite = request.queryParams("civilite");
+
 			Map<String, Object> attributes = new HashMap<>();
 
 			// Exemple 1 (à déplacer dans une classe statique !):
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-			// J'ajoute un métier :
-			//Demo metier = new Demo();
-			//metier.setNom("exemple1");
-
-			// J'ajoute une nouvelle personne
-			
-			Personne personne = new Personne();
-			personne.setCivilite(civilite);
-			personne.setNom(nom);
-			personne.setPrenom(prenom);;
-
 			Crud crud = new Crud();
-			crud.Create(entityManager, personne);
+			String nom_de_fichier;
+
+			if (action.equals("Ajouter") == true) {
+
+				System.out.println("toto ajouter");
+				crud.Create(entityManager, civilite, nom, prenom);
+				nom_de_fichier = "modifier.ftl";
+
+			}
+
+			if (action.equals("Lire") == true) {
+
+				System.out.println("toto lire");
+				attributes = crud.Read(attributes, entityManager);
+				
+				nom_de_fichier = "resultat.ftl";
+
+			}
 			
-//			entityManager.getTransaction().begin();
-//			entityManager.persist(personne);
-//			entityManager.getTransaction().commit();
-			//entityManager.close();
+			else{
+				
+				nom_de_fichier = "modifier.ftl";
+				
+			}
 			
+			// entityManager.getTransaction().begin();
+			// entityManager.persist(personne);
+			// entityManager.getTransaction().commit();
+			// entityManager.close();
+
 			// Ajout pour TP3
-			
-			//TypedQuery<Demo> query = entityManager.createQuery("from Demo", Demo.class);
-//			TypedQuery<Personne> query = entityManager.createQuery("from Personne", Personne.class);
-//			
-//			attributes.put("objets", query.getResultList());
-			crud.Read(attributes, entityManager);
+
+			// TypedQuery<Demo> query = entityManager.createQuery("from Demo",
+			// Demo.class);
+			// TypedQuery<Personne> query = entityManager.createQuery("from
+			// Personne", Personne.class);
+			//
+			// attributes.put("objets", query.getResultList());
+			// crud.Read(attributes, entityManager);
+			//nom_de_fichier = "resultat.ftl";
 			entityManager.close();
 
-			return new ModelAndView(attributes, "resultat.ftl");
+			return new ModelAndView(attributes, nom_de_fichier);
 		}, getFreeMarkerEngine());
 
 	}
