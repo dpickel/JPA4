@@ -28,4 +28,19 @@ public class Crud {
 		
 	}
 	
+	public void Delete( EntityManager entityManager, String civilite, String nom, String prenom ){
+
+		Personne personne = new Personne();
+		personne = entityManager.find(Personne.class, 50);
+		
+		personne.setCivilite(civilite);
+		personne.setNom(nom);
+		personne.setPrenom(prenom);
+		
+		entityManager.getTransaction().begin();
+		entityManager.remove(personne);
+		entityManager.getTransaction().commit();
+		
+	}
+	
 }

@@ -5,7 +5,7 @@
 		<select name="Action">
 		<option value = "Ajouter"> Ajouter </option> 
 		<option value = "Lire"> Lire </option>
-		<option value = "Mettre a jour"> Mettre_a_jour </option>
+		<option value = "Mettre_a_jour"> Mettre a jour </option>
 		<option value = "Supprimer"> Supprimer </option>
 		</select>
 		<br></br>

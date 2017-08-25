@@ -43,11 +43,11 @@ public class Router implements SparkApplication {
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation");
 			EntityManager entityManager = entityManagerFactory.createEntityManager();
 			Crud crud = new Crud();
-			String nom_de_fichier;
+			String nom_de_fichier = "home.ftl";
 
 			if (action.equals("Ajouter") == true) {
 
-				System.out.println("toto ajouter");
+				System.out.println("toto ajoter");
 				crud.Create(entityManager, civilite, nom, prenom);
 				nom_de_fichier = "modifier.ftl";
 
@@ -62,11 +62,14 @@ public class Router implements SparkApplication {
 
 			}
 			
-			else{
-				
+			if (action.equals("Supprimer") == true) {
+
+				System.out.println("toto supprimer");
+				crud.Delete(entityManager, civilite, nom, prenom);
 				nom_de_fichier = "modifier.ftl";
-				
+
 			}
+
 			
 			// entityManager.getTransaction().begin();
 			// entityManager.persist(personne);
